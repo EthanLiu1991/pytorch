@@ -1,3 +1,11 @@
+# 安装 grpc 相关的 python 模块
+# pip install grpcio
+# 安装 python 下的 protoc 编译器
+# pip install grpcio-tools
+# 编译 proto 文件
+# python -m grpc_tools.protoc --python_out=. --grpc_python_out=. -I. [proto文件名]
+
+
 syntax = "proto3";
 
 service VariableBatch {
