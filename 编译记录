@@ -1,0 +1,32 @@
+0、添加rpc代码
+修改torch/utils/data/sampler.py中BatchSampler
+添加torch/utils/data/proto目录
+
+一、修改docker.Makefile
+CUDA_VERSION              = 10.2
+CUDNN_VERSION             = 7
+PYTHON_VERSION            = 3.7
+PYTORCH_VERSION           = 1.10.0
+
+二、修改Dockergfile
+docker version > 18.06
+设置docker为 experimental enabled and DOCKER_BUILDKIT=1
+编译cmake-3.13.0
+注释 RUN git submodule update --init --recursive --jobs 0
+将TORCH_CUDA_ARCH_LIST中8.0改为7.5
+设置编译选项 MAX_JOBS=12
+添加并修改ARG PYTORCH_VERSION=1.10.0
+
+
+三、配置第三方库
+根据.gitmodules的配置在third_party手动下载第三方库
+在各个依赖库里继续下载第三方库
+配置依赖库版本：
+kineto（main）报错 libkineto/src/CuptiCallbackApi.cpp
+切换至v0.3.1
+
+onnx（master）报错 缺乏optimizer
+切换至v1.8.1
+
+四、aten/src/ATen/cpu/vec/vec256/vec256_bfloat16.h无法转换数据结构
+在cmake/Codegen.cmake里注释CXX_AVX2_FOUND有关内容

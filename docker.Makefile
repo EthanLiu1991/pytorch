@@ -8,8 +8,8 @@ $(warning WARNING: No docker user found using results from whoami)
 DOCKER_ORG                = $(shell whoami)
 endif
 
-CUDA_VERSION              = 11.1
-CUDNN_VERSION             = 8
+CUDA_VERSION              = 10.2
+CUDNN_VERSION             = 7
 BASE_RUNTIME              = ubuntu:18.04
 BASE_DEVEL                = nvidia/cuda:$(CUDA_VERSION)-cudnn$(CUDNN_VERSION)-devel-ubuntu18.04
 
@@ -19,7 +19,8 @@ CUDA_CHANNEL              = nvidia
 INSTALL_CHANNEL           = pytorch
 
 PYTHON_VERSION            = 3.7
-PYTORCH_VERSION           = $(shell git describe --tags --always)
+PYTORCH_VERSION           = 1.10.0
+#PYTORCH_VERSION           = $(shell git describe --tags --always)
 # Can be either official / dev
 BUILD_TYPE                = dev
 BUILD_PROGRESS            = auto

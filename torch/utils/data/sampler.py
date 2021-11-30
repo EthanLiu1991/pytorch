@@ -3,7 +3,13 @@ from torch import Tensor
 
 from typing import Iterator, Optional, Sequence, List, TypeVar, Generic, Sized
 
+import socket
+import grpc
+from .proto import variablebatch_pb2_grpc
+from .proto import variablebatch_pb2
+
 T_co = TypeVar('T_co', covariant=True)
+
 
 class Sampler(Generic[T_co]):
     r"""Base class for all Samplers.
@@ -229,7 +235,16 @@ class BatchSampler(Sampler[List[int]]):
         for idx in self.sampler:
             batch.append(idx)
             if len(batch) == self.batch_size:
-                yield batch
+                # 连接 rpc 服务器
+                channel = grpc.insecure_channel('10.60.150.242:10086')
+                # 调用 rpc 服务
+                stub = variablebatch_pb2_grpc.VariableBatchStub(channel)
+                hostname = socket.gethostname()
+                response = stub.GetVariableBatch(variablebatch_pb2.GetVariableBatchRequest(hostname, indices=batch))
+                print("Variable batch received: " + response.indices)
+                print("Variable batch len: " + len(response.indices))
+                yield response.indices
+                # yield batch
                 batch = []
         if len(batch) > 0 and not self.drop_last:
             yield batch
