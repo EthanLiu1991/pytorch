@@ -68,7 +68,7 @@ RUN --mount=type=cache,target=/opt/ccache \
 # ethanliu modify
 #    TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1 7.0+PTX 8.0" TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
     TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1 7.0+PTX 7.5" TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
-    MAX_JOBS=12 \
+    MAX_JOBS=16 \
 #
     CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
     python setup.py install

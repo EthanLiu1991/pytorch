@@ -240,6 +240,7 @@ class BatchSampler(Sampler[List[int]]):
                 # 调用 rpc 服务
                 stub = variablebatch_pb2_grpc.VariableBatchStub(channel)
                 hostname = socket.gethostname()
+                #
                 response = stub.GetVariableBatch(
                     variablebatch_pb2.GetVariableBatchRequest(hostname=hostname, indices=batch))
                 print("Variable batch received: " + response.indices)
