@@ -30,3 +30,6 @@ onnx（master）报错 缺乏optimizer
 
 四、aten/src/ATen/cpu/vec/vec256/vec256_bfloat16.h无法转换数据结构
 在cmake/Codegen.cmake里注释CXX_AVX2_FOUND有关内容
+
+五、编译
+sudo make -f docker.Makefile
