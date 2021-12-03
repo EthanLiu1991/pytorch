@@ -161,7 +161,9 @@ docs/source/scripts/activation_images/
 # Compiled protocol buffers
 *.pb.h
 *.pb.cc
-*_pb2.py
+
+# ethanliu modify
+#*_pb2.py
 
 # Compiled python
 *.pyc
