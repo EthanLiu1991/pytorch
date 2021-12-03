@@ -5,6 +5,7 @@ from typing import Iterator, Optional, Sequence, List, TypeVar, Generic, Sized
 
 import socket
 import grpc
+
 from .proto import variablebatch_pb2_grpc
 from .proto import variablebatch_pb2
 
@@ -235,16 +236,16 @@ class BatchSampler(Sampler[List[int]]):
         for idx in self.sampler:
             batch.append(idx)
             if len(batch) == self.batch_size:
+                print("Normal batch: ", batch[:])
                 # 连接 rpc 服务器
                 channel = grpc.insecure_channel('10.60.150.242:10086')
-                # 调用 rpc 服务
+                # 调用 rpc 服务并获取响应
                 stub = variablebatch_pb2_grpc.VariableBatchStub(channel)
                 hostname = socket.gethostname()
-                #
                 response = stub.GetVariableBatch(
                     variablebatch_pb2.GetVariableBatchRequest(hostname=hostname, indices=batch))
-                print("Variable batch received: " + response.indices)
-                print("Variable batch len: " + len(response.indices))
+                print("Variable batch received: ", response.indices[:])
+                print("Variable batch len: ", len(response.indices))
                 yield response.indices
                 # yield batch
                 batch = []
